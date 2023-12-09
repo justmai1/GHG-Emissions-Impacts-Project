@@ -1,0 +1,170 @@
+"","Sector","City","Parent Company","Total_Emissions"
+"1","Chemicals","Elma","Ascensus Specialties LLC",194764
+"2","Chemicals","Kalama","Emerald Performance Materials LLC",633799
+"3","Chemicals","Kennewick","Agrium US Inc.",1480994
+"4","Chemicals","Longview","Solvay Chemicals Inc.",481547
+"5","Food Production","Chehalis","Darigold Inc.",127698
+"6","Food Production","Connell","Lamb Weston, Inc.",360534
+"7","Food Production","Kent","Starbucks Corp.",91999
+"8","Food Production","Lynden","Darigold Inc.",192674
+"9","Food Production","Moses Lake","Basic American Inc.",297911
+"10","Food Production","Moses Lake","J.R. Simplot Company",362869
+"11","Food Production","Othello","J.R. Simplot Company",962631
+"12","Food Production","Othello",NA,751238
+"13","Food Production","Pasco","Lamb Weston, Inc.",455933
+"14","Food Production","Prosser","Tree Top Inc.",176416
+"15","Food Production","Quincy","Lamb Weston, Inc.",367540
+"16","Food Production","Richland","Lamb Weston, Inc.",581676
+"17","Food Production","Selah","Tree Top Inc.",171843
+"18","Food Production","Sunnyside","Darigold Inc.",311049
+"19","Food Production","Tacoma","Darling Ingredients Inc.",60486
+"20","Food Production","Vancouver","Great Western Malt",174007
+"21","Food Production","Vancouver","PepsiCo Inc",156987
+"22","Food Production","Wallula","Tyson Foods, Inc",939204
+"23","Food Production","Warden","Lamb Weston, Inc.",172630
+"24","Food Production","Warden","Washington Potato Co.",288069
+"25","Food Production","Wenatchee","Tree Top Inc.",77093
+"26","Government","Bremerton","US Government",450254
+"27","Government","Ellensburg","State of Washington",133200
+"28","Government","Fairchild AFB","US Government",133579
+"29","Government","Joint Base Lewis-McChord","US Government",786622
+"30","Government","Oak Harbor","US Government",147869
+"31","Government","Pullman","State of Washington",607973
+"32","Government","Richland","US Government",166463
+"33","Government","Seattle","Port of Seattle",146273
+"34","Government","Seattle","State of Washington",880670
+"35","Government","Silverdale","US Government",212518
+"36","Livestock","Burbank","J.R. Simplot Company",295472
+"37","Livestock","Eltopia","Easterday Ranches",138864
+"38","Livestock","Kennewick","Easterday Ranches",193327
+"39","Livestock","Moses Lake","Agri Beef Co.",252189
+"40","Livestock","Sunnyside","Horse Heaven Cattle Feeders, Inc.",109705
+"41","Manufacturing","Auburn","The Boeing Company",367901
+"42","Manufacturing","Camas","Linear Technology Corporation",235274
+"43","Manufacturing","Camas","WaferTech LLC",1284436
+"44","Manufacturing","Everett","The Boeing Company",726537
+"45","Manufacturing","Moses Lake","SGL Automotive Carbon Fibers LLC",72034
+"46","Manufacturing","Puyallup","The Boeing Company",194675
+"47","Manufacturing","Renton","The Boeing Company",182011
+"48","Manufacturing","Seattle","Saint-Gobain Corporation",453057
+"49","Manufacturing","Seattle","The Boeing Company",221323
+"50","Manufacturing","Spokane","Goodrich Corp.",395581
+"51","Manufacturing","Tacoma","James Hardie Building Products Inc.",65523
+"52","Manufacturing","Tacoma","Koch Industries Inc.",452553
+"53","Manufacturing","Tukwila","The Boeing Company",146801
+"54","Manufacturing","Vancouver","SEH America Inc.",110080
+"55","Metals","Ferndale","Alcoa Corp.",10053702
+"56","Metals","Kalama",NA,233702
+"57","Metals","Malaga","Alcoa Corp.",1309513
+"58","Metals","Moses Lake","REC Silicon",688200
+"59","Metals","Seattle","Nucor Corporation",1045902
+"60","Metals","Spokane Valley","Kaiser Aluminum Corp.",1176731
+"61","Metals","Tukwila","Jorgensen Forge Corp.",73387
+"62","Minerals","Kalama","O-I Glass Inc.",217397
+"63","Minerals","Quincy","Imerys Filtration Minerals Inc.",207711
+"64","Minerals","Seattle","Ardagh Holdings USA Inc.",721000
+"65","Minerals","Seattle","Ash Grove Cement Co.",3840736
+"66","Minerals","Tacoma","Graymont, Inc.",359534
+"67","Minerals","Winlock","Cardinal Glass Industries Inc.",1027754
+"68","Minerals","Woodinville","Vanguard Properties Co.",56051
+"69","Natural Gas Systems","Bellevue","Puget Holdings LLC",602466
+"70","Natural Gas Systems","Bickleton","The Williams Companies, Inc.",185388
+"71","Natural Gas Systems","Chehalis","The Williams Companies, Inc.",195515
+"72","Natural Gas Systems","Cook","The Williams Companies, Inc.",167536
+"73","Natural Gas Systems","Goldendale","The Williams Companies, Inc.",246112
+"74","Natural Gas Systems","Kennewick","MDU Resources Group Inc.",205059
+"75","Natural Gas Systems","Mount Vernon","The Williams Companies, Inc.",475918
+"76","Natural Gas Systems","Plymouth","The Williams Companies, Inc.",23461
+"77","Natural Gas Systems","Portland","NW Natural",53692
+"78","Natural Gas Systems","Rosalia","TransCanada Northern Border Inc.",934965
+"79","Natural Gas Systems","Snohomish","The Williams Companies, Inc.",433832
+"80","Natural Gas Systems","Spokane","Avista Corp.",287475
+"81","Natural Gas Systems","Starbuck","TransCanada Northern Border Inc.",363904
+"82","Natural Gas Systems","Sumas","The Williams Companies, Inc.",879386
+"83","Natural Gas Systems","Sumner","The Williams Companies Inc.",289181
+"84","Natural Gas Systems","Wallula","TransCanada Northern Border Inc.",1184127
+"85","Natural Gas Systems","Washougal","The Williams Companies, Inc.",179113
+"86","Petroleum Systems","Anacortes","Air Liquide USA Inc.",640264
+"87","Petroleum Systems","Anacortes","Linde Gas North America LLC",509055
+"88","Petroleum Systems","Anacortes","Marathon Petroleum Corp",13001913
+"89","Petroleum Systems","Anacortes","Shell Petroleum Inc.",19235767
+"90","Petroleum Systems","Blaine",NA,20486310
+"91","Petroleum Systems","Ferndale","Phillips 66 Company",7880228
+"92","Petroleum Systems","Hoquiam","Renewable Energy Group Inc.",144229
+"93","Petroleum Systems","Seattle","Alon USA LP",120274
+"94","Petroleum Systems","Tacoma","Par Pacific Holdings Inc.",1544928
+"95","Power Plants","Bellevue","Puget Holdings LLC",21055
+"96","Power Plants","Bellingham","Puget Holdings LLC",1359347
+"97","Power Plants","Blaine","Puget Holdings LLC",305619
+"98","Power Plants","Centralia",NA,59338269
+"99","Power Plants","Chehalis","Berkshire Hathaway",7442169
+"100","Power Plants","Elma",NA,9313067
+"101","Power Plants","Ferndale","Puget Holdings LLC",3781208
+"102","Power Plants","Goldendale","Puget Holdings LLC",5239993
+"103","Power Plants","Graham","Emerald City Renewables LLC",153140
+"104","Power Plants","Kettle Falls","Avista Corp.",4194076
+"105","Power Plants","Longview","Puget Holdings LLC",5784628
+"106","Power Plants","Maple Valley","Bio Energy Washington",258790
+"107","Power Plants","Mount Vernon","Puget Holdings LLC",1198722
+"108","Power Plants","Roosevelt","Klickitat County",556283
+"109","Power Plants","Seattle","BIF II District Energy Holdings III, Delaware",760572
+"110","Power Plants","Spokane","City of Spokane",2380715
+"111","Power Plants","Spokane Valley","Avista Corp.",167980
+"112","Power Plants","Sumas","Puget Holdings LLC",1998956
+"113","Power Plants","Tacoma","Puget Holdings LLC",3924874
+"114","Power Plants","Vancouver","Clark Public Utilities",5855573
+"115","Power Plants","Vancouver","US Government",180009
+"116","Pulp and Paper","Camas","Koch Industries Inc.",4265232
+"117","Pulp and Paper","Cosmopolis","Gores Group",5075003
+"118","Pulp and Paper","Everett","Kimberly-Clark Corporation",26746
+"119","Pulp and Paper","Longview","Kapstone Paper & Packaging Corp.",16317134
+"120","Pulp and Paper","Longview","NP Paper Investor Holdings LLC",394474
+"121","Pulp and Paper","Longview","Weyerhaeuser Co.",15779251
+"122","Pulp and Paper","Port Angeles","McKinley Paper Co.",1113779
+"123","Pulp and Paper","Port Townsend","Port Townsend Paper Corp.",5704574
+"124","Pulp and Paper","Spokane","Cowles Publishing Co.",308365
+"125","Pulp and Paper","Sumner","Sonoco Products Company",114427
+"126","Pulp and Paper","Tacoma","Westrock Corp.",11069047
+"127","Pulp and Paper","Usk","Ponderay Newsprint Company",405304
+"128","Pulp and Paper","Wallula","Packaging Corp of America",8110838
+"129","Pulp and Paper","Yakima","Michelson Packaging Co.",102329
+"130","Supplier","Bellevue","Puget Holdings LLC",37504945
+"131","Supplier","Ellensburg","City of Ellensburg",189657
+"132","Supplier","Enumclaw","City of Enumclaw",162516
+"133","Supplier","Kennewick",NA,12143508
+"134","Supplier","Portland",NA,3139158
+"135","Supplier","Spokane",NA,7535966
+"136","Waste","Castle Rock","Cowlitz County",2013412
+"137","Waste","East Wenatchee","Waste Management Inc.",383805
+"138","Waste","Ephrata","Grant County",435834
+"139","Waste","Graham","Waste Connections Inc.",1060358
+"140","Waste","Longview","Cowlitz County",167364
+"141","Waste","Maple Valley","King County Solid Waste Division",977032
+"142","Waste","Okanogan","Okanogan County",74578
+"143","Waste","Puyallup","Waste Connections Inc.",24673
+"144","Waste","Richland","City of Richland",265678
+"145","Waste","Roosevelt","Republic Services, Inc.",2424013
+"146","Waste","Snohomish","Snohomish County",211753
+"147","Waste","Spokane","City of Spokane",20354
+"148","Waste","Tacoma","City of Tacoma",164606
+"149","Waste","Yakima","Yakima County Public Services - Solid Waste Division",1136169
+"150","Waste","Zillah","Yakima County Public Services - Solid Waste Division",368552
+"151","Wood Products","Aberdeen","Sierra Pacific Industries",2342150
+"152","Wood Products","Bingen","SDS Lumber Company",883402
+"153","Wood Products","Centralia","Littlejohn & Co. LLC",113780
+"154","Wood Products","Centralia","Sierra Pacific Industries",445694
+"155","Wood Products","Clarkston","Bennett Lumber Products Inc.",134817
+"156","Wood Products","Colville","Vaagen Bros. Lumber Inc.",456950
+"157","Wood Products","Darrington","Hampton Lumber Mills Washington Inc.",877770
+"158","Wood Products","Forks","Interfor US Inc.",65882
+"159","Wood Products","Kettle Falls","Boise Cascade Company",1252915
+"160","Wood Products","Longview","American Industrial Partners (AIP)",136581
+"161","Wood Products","Morton","Hampton Lumber Mills Washington Inc.",336989
+"162","Wood Products","Mount Vernon","American Industrial Partners (AIP)",79840
+"163","Wood Products","Mount Vernon","Sierra Pacific Industries",2902161
+"164","Wood Products","Port Angeles","Interfor US Inc.",410974
+"165","Wood Products","Randle","Hampton Lumber Mills Washington Inc.",602973
+"166","Wood Products","Raymond","Weyerhaeuser Co.",448057
+"167","Wood Products","Shelton","Sierra Pacific Industries",679400
+"168","Wood Products","Spanaway","Rainier Veneer Inc.",174634
+"169","Wood Products","Tacoma","Simpson Lumber Company LLC",41951
