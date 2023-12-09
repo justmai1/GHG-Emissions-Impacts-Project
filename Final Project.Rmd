@@ -1,0 +1,543 @@
+---
+title: "Final Project"
+author: "Justin Mai, Edrin Elmi, Sangmin Lee"
+date: "2023-12-03"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# Final Project: Analyzing Green House Gas Emissions and its Impact on Air Pollution and Wildfires
+
+1. Introduction
+
+2. Explaining the Data
+
+Research Question 1:
+
+  - 3. Methods
+
+  - 4. Results
+  
+Research Question 2:
+
+  - 3. Methods
+
+  - 4. Results
+  
+Research Question 3:
+
+  - 3. Methods
+
+  - 4. Results
+
+5. Discussion: What do these results mean?
+
+6. Summary
+
+
+```{r}
+library(tidyverse)
+library(readr)
+library(patchwork)
+```
+
+Data:
+
+```{r}
+  ghg <- read_delim("ghg washington.csv")
+  wildfires <- read_delim("wa_wildfires.csv")
+  air_pollution <- read_delim("washington_pollution.csv")
+```
+
+# 1. Introduction
+
+Context:
+
+  Since the *Industrial Age*, humans globally have increased their total greenhouse gas emissions year by year. As we reached the 2000s, we realized that these emissions are directly correlated with global warming and other unbalances in the environment.
+
+  The timeline is as follows...
+  
+1st Assessment Report of the **Intergovernmental Panel on Climate Change**, 1990, believed that climate change was due largely to natural circumstances and had little to do with human influence.
+
+4th Assessment Report of the **IPCC**, 2007, they observed that climate change is very likely due to human actions, with evidence of an increase in average temperature and greenhouse gas concentrations released by humans.
+
+6th Assessment Report of the **IPCC**, 2023, they have concluded that climate change is undisputedly caused by human actions and influence.
+
+We now have glaring evidence that these abnormalities in global warming and natural effects are due to humans, so we are responsible for reversing our impact on the Earth. This is especially important to Washington residents, policymakers, and scientists because the state is largely dependent on our natural resources for food and shelter. In Washington, fisheries and shellfish harvesting is a large part of indigenous culture and residential culture. It's also creates numerous jobs for our residents. Washington is also home to many natural sights that our residents take pride in and certainly want to preserve. Mountain range sights such as *Mount Rainer*, beaches, farms, and varying species of vegetation are all being negatively impacted due to our greenhouse emissions. Therefore, with greenhouse gas emissions impacting ocean temperatures and other abnormalities as much as atmospheric temperatures, pollution, and vegetation above water, its important to take steps to reverse these effects. The first step for many people is to understand the situation and visually seeing how we are impacting the Washington State.
+
+To visualize our issue of excess greenhouse emissions, we will be *analyzing greenhouse gas emissions by different variables (sectors, corporation, location, time, etc.) and its impact on air pollution and wildfires*.
+
+```{r}
+ghg %>% 
+  group_by(Year) %>% 
+  summarize(avg_emissions = mean(`Total Emissions (MTCO2e)`)) %>% 
+  ggplot(aes(Year,avg_emissions)) +
+  geom_point() +
+  geom_line() +
+  labs(y = "Average Total Emissions (MTCO2e)",
+       title = "Average Total Emissions by Year")
+```
+
+This graph demonstrates our total greenhouse gas emissions which increased from 2012 through 2019 but is moving in a decreasing trend. Even though it seems that our average total emissions is decreasing we should still be wary. One reason why is its correlation to wildfires across Washington.
+
+```{r}
+wildfires %>% 
+  filter(YEAR >= 2000) %>% 
+  group_by(YEAR) %>% 
+  summarize(max_acres = max(ACRES)) %>% 
+  ggplot(aes(YEAR,max_acres)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(x = "Year",
+       y = "Acres Burned",
+       title = "Largest Wildfires by Year")
+```
+
+This graph demonstrates that the largest wildfires recorded in Washington state is within the recent decade more so then in the past. This correlates with our total emissions data, showing that there is a positive correlation between the two variables as time moves on. Since wildfires can impact human life and wildlife alike, we must take steps towards mitigating its effects.
+
+We will also be looking at air pollution data which is important in impacting our way of life. We will be looking to identify a correlation between different types of GHG emissions and air pollution in Washington State throughout the years.
+
+Beyond these introductory graphs demonstrating the importance of our topic of global emissions and its correlation to disasters today and the land of the future, we are presenting this project to further understand GHG effects and to inform our audience of Washington residents.
+
+Some of the Research questions that we set out to answer are...
+
+Q1 **What are the total greenhouse gas emissions based on *sector, location, and company?*** 
+
+Q2 **Is there a correlation between greenhouse gas emissions and wildfire *amounts and sizes* in Washington State?**
+
+Q3: **Is there a correlation between GHG emissions and air pollution?**
+
+All of these research questions will help us narrow down the causes of these emissions and identify the locations that we must focus on. Narrowing down the scope by *sector, location, and/or company* is important to alleviating the issue and simplifying down the root causes and where we need to pay the most attention. We would also like to identify if the location of these emissions is related to larger wildfires. Overall, this report will give climate action groups and volunteers areas we need to focus on and demonstrate potential risks that excess emissions can cause.
+
+
+# 2. Explaining the Data
+
+```{r}
+sample_n(ghg,6)
+```
+**Washington Greenhouse Gas Emission Dataset**:
+
+This dataset originates from the open government data source for Washington state from *data.wa.gov*. This data is collected by government and federal agencies through sources from their metadata inventory. Because this data is collected based of federal agencies, it is a well trusted source, especially for collecting political and environmental data such as climate change. While government data can be restricted from the public, all datasets from this source is open for public use without restriction to access. There weren't any data quality issues that we encountered because the dataset is constantly being updated with recent time data of Washington State.
+
+**Why this Data?**: This dataset will act as our central dataset to compare with to both air pollution data and wildfire data. It was important to us that our central dataset for the story is high quality data, and we found *data.wa.gov* to be a trust worthy source. This dataset is abundant in information, giving us data for CO2 emissions, methane emissions, and many other greenhouse gas emissions that we will be looking at.
+
+**Dataset Description**:
+
+```{r}
+ghg <- ghg %>% 
+  select(Year,Sector,Subsector,`NAICS Definition`,`Parent Company`,City,County,`Total Emissions (MTCO2e)`,`Biogenic Carbon Dioxide (MTCO2e)`,`Carbon Dioxide (MTCO2e)`,`Methane (MTCO2e)`,`Nitrous Oxide (MTCO2e)`)
+
+colSums(is.na(ghg))
+```
+
+Each row represents and institution or company from a specified location during a specified year. We are working with 1608 observations in this dataset. The relevant variables are the ones that we have selected to keep, coded using the *dplyr package*. There are a total of 79 missing values, but most are from the *Parent Company* variable which isn't concerning. There are some companies that release very little emission so some of the emission variables are noted as 0 which is a quality problem of this dataset.
+
+```{r}
+sample_n(wildfires,6)
+```
+
+**Washington Wildfire Data**:
+
+This dataset originates from the *Washington Geospatial Open Data Portal*, through the website *geo.wa.gov*. This data is regularly updated and corrected by different Washington state departments. Because the Washington State Departments collected this data, it is coming from a reliable source. The Wildfire data is made for public viewing and public use without any restrictions stated in the license. This dataset consists of records of large Wildfires from 1973 to 2022 data, which is the population. We narrow down the sample to 2000-2022 data to only analyze patterns from recent times. The only data quality issue that we encountered is that many of the values from the *CAUSES* variable are *unknown*, however this isn't an issue because we are looking at size and location of the wildfires in comparison to GHG emission patterns.
+
+**Why this dataset?**: We are using this dataset because it is published by a trusted source that provides us data on wildfire times and size.
+
+**Dataset Description**:
+```{r}
+wildfires <- wildfires %>% 
+  select(-OBJECTID,-AGENCY,-CAUSE,-SHAPEAREA,-SHAPELEN)
+colSums(is.na(wildfires))
+```
+Each row represents a wildfire in Washington State. There are 1150 observations in this dataset. All of the variables from the original dataset are going to be used for our analysis except for *object ID and agency* which isn't needed for merging with other datsets. There aren't many missing values and all of the values seem relivant and reasonable.
+
+```{r}
+air_pollution <- air_pollution %>% 
+  filter(State == "Washington")
+sample_n(air_pollution,6)
+```
+
+**Washington Air Pollution Data**:
+
+We got this data off *Kaggle.com* but it is stated to be sourced by the U.S. Environmental Protection Agency (EPA). Since this is a Kaggle dataset and is published as a public dataset, it is open for all to use without any restrictions. This dataset was originally data about air pollution in the United States from 2000 to 2023, however, we filtered the data to only be on Washington state data. So, the population of this data is the United States but we are narrowing down the sample to be Washington state data. A quality issue for this data is that all of the observations are from the Greater Seattle Area instead of representing all of Seattle. However, because some of our highest emissions reside around the Seattle area, we are able to compare this data with GHG data to answer our question of correlation between GHG emissions and air pollution.
+
+**Why this dataset?**: Because this data was sourced and used by the U.S. Environmental Protection Agency, we believe this data to be reliable and accurate to what we require to answer our research question. We also found variables such as *average ozone level, AQI, and carbon levels to be important in measuring air pollution.
+
+**Dataset Description**:
+
+```{r}
+air_pollution <- air_pollution %>% 
+  select(Date,State,County,City,'O3 Mean','O3 AQI','CO Mean','CO AQI','SO2 Mean', 'SO2 AQI', 'NO2 Mean', 'NO2 AQI')
+
+colSums(is.na(air_pollution))
+```
+Each row represents data for a specific location during a specific date. We narrowed down our sample data to 3274 observations. The relevant variables would be time, location, AQI, O3, SO2, NO2 and CO data. The logistical data will be used to view correlation and the location and time data will be used to merge and clean with the other datasets. There aren't any missing values and all of the values are reasonable (no quality issues).
+
+
+# **Research Question 1: What are the total greenhouse gas emissions based on *sector, location, and company?***:
+
+## 3. Q1 Methods
+```{r}
+emissions_total <- ghg %>%
+  group_by(Sector,City,`Parent Company`) %>%
+  summarize(Total_Emissions = sum(`Total Emissions (MTCO2e)`))
+```
+Which variables did you include, why?
+
+- The variables I included were Sector, Parent Company, City, and Total_Emissions because the research question was based on only those variables.
+
+**Sector** - Types of Company
+
+**Parent Company** - Company overseeing smaller company
+
+**City**
+
+**Total Emissions** - Sum of all GHG emissions (CO, NO, S, etc.), in MTCO2e (metric tons of CO2 equivalent)
+
+How did you process your data, why?
+
+- I used group_by and summarize functions from the dplyr package to organize the information. I grouped the data by different categories like sectors, cities, and parent companies, and then added up the total greenhouse gas emissions for each group. Because it helps us see the big picture of how much greenhouse gases are being released in various areas and industries.
+
+How did you select your sample?
+
+- How we selected our sample was we looked for the most credibile and most resourceful dataset on greenhouse gas emissions and this dataset was the best option which is why we selected it.
+
+Any technical decisions you did, such as either to remove missings, or replace missing values with another one?
+
+- There were no technical decision I had to make, I didn't need to remove or replace missing values
+
+- One missing value was for parent companies but we opted to keep the data to show since it is a significant part of the total emissions
+
+## 4. Q1 Results
+```{r}
+emissionsSector <- emissions_total %>%
+  group_by(Sector) %>%
+  summarize(Total_Emissions = sum(Total_Emissions)) %>%
+  top_n(5, wt = Total_Emissions) %>%
+  pull(Sector)
+emissions1 <- emissions_total %>%
+  filter(Sector %in% emissionsSector)
+emissions1
+
+bar_plot1 <- ggplot(emissions1, aes(x = Sector, y = Total_Emissions, fill = Sector)) +
+  geom_col() +
+  labs(title = "Total Greenhouse Gas Emissions by Sector",
+    x = "Sector",
+    y = "Total Emissions (MTCO2e)",
+    fill = "Sector")
+bar_plot1
+```
+
+```{r}
+emissionsCity <- emissions_total %>%
+  group_by(City) %>%
+  summarize(Total_Emissions = sum(Total_Emissions)) %>%
+  top_n(5, wt = Total_Emissions) %>%
+  pull(City)
+emissions2 <- emissions_total %>%
+  filter(City %in% emissionsCity)
+emissions2
+
+bar_plot2 <- ggplot(emissions2, aes(x = City, y = Total_Emissions, fill = Sector)) +
+  geom_col() +
+  labs(title = "Total Greenhouse Gas Emissions by City",
+    x = "City",
+    y = "Total Emissions (MTCO2e)",
+    fill = "Sector")
+bar_plot2
+```
+
+```{r}
+emissionsCompany <- emissions_total %>%
+  group_by(`Parent Company`) %>%
+  summarize(Total_Emissions = sum(Total_Emissions)) %>%
+  top_n(3, wt = Total_Emissions) %>%
+  pull(`Parent Company`)
+emissions3 <- emissions_total %>%
+  filter(`Parent Company` %in% emissionsCompany)
+
+bar_plot3 <- ggplot(emissions3, aes(x = `Parent Company`, y = Total_Emissions, fill = Sector)) +
+  geom_col() +
+  labs(title = "Total Greenhouse Gas Emissions by Company",
+    x = "Company",
+    y = "Total Emissions (MTCO2e)",
+    fill = "Sector")
+bar_plot3
+```
+
+The data tells me about the total greenhouse gas emissions by sector, location, and companies and what it told me was that power plants emit the most green house gases out of all the sectors, and that the least is livestock, the city that emits the most greenhouse gases is Centralia and the least is Plymouth, the Company that emits the most green house gases is Puget holdings and the least is Kimberly Clark Corporation.
+
+# **Research question 2. Is there a correlation between greenhouse gas emissions and wildfire *amounts and sizes* in Washington State?**
+
+## 3. Q2 Methods
+
+```{r}
+wildfires_by_year <- wildfires %>%
+  group_by(YEAR) %>%
+  summarize(avg_size = mean(ACRES, na.rm = TRUE))
+
+wildfires_count_by_year <- wildfires %>%
+  group_by(YEAR) %>%
+  summarize(Wildfires_count = n())
+
+total_emissions_by_year <- ghg %>%
+  group_by(Year) %>%
+  summarize(Total_Emissions = sum(`Total Emissions (MTCO2e)`, na.rm = TRUE))
+
+merged_wildfires <- right_join(wildfires_by_year, wildfires_count_by_year, by = "YEAR")
+
+merged_data <- right_join(merged_wildfires, total_emissions_by_year, by = c("YEAR" = "Year"))
+```
+
+Variables Include in final dataset (**merged_data**)
+
+**YEAR**
+
+**avg_size** - Average wildfire size (in acres) by year
+
+**Wildfires_count** - Number of wildfires for that year
+
+**Total Emissions** - Sum of all GHG emissions (CO, NO, S, etc.), in MTCO2e (metric tons of CO2 equivalent)
+
+- We created **avg_size** and **Wildfires_count** to help us compare the results to **Total Emissions**, analyzing if there's a correlation or not.
+
+- We processed the data by first using group_by() and summarize() functions to get the **avg_size**, **Wildfires_count**, and **Total Emissions**. We then joined the wildfire and GHG emissions data together using right_join().
+
+- We selected our sample by grouping our data by year.
+
+- We didn't make any technical decisions to replace NA's
+
+- We used line graphs to represent the pattern of each graph, giving us a clear visual of increasing and decrasing patterns.
+
+## 4. Q2 Results
+
+```{r}
+ggplot(merged_data, aes(x = YEAR, y = avg_size)) +
+  geom_line() +
+  labs(title = "Average Wildfire Size by Year",
+       x = "Year",
+       y = "Average Wildfire Size (ACRES)")
+```
+
+```{r}
+ggplot(merged_data, aes(x = YEAR, y = Wildfires_count)) +
+  geom_line() +
+  labs(title = "Number of Wildfire by Year",
+       x = "Year",
+       y = "Number of Wildfire")
+```
+
+```{r}
+ggplot(merged_data, aes(x = YEAR, y = Total_Emissions)) +
+  geom_line() +
+  labs(title = "Total Emissions by Year",
+       x = "Year",
+       y = "Total Emissions (MTCO2e)")
+```
+
+The average wildfires size by year had rapidly increased at 2015, but it has steadily decreased since 2015.
+
+The number of wildfires had remained about 50, but during the recent 5 years, the number of wildfires has rapidly increased.
+
+The total emissions had increased since 2012 to 2019, and has decreased since 2019 to the presemt.
+
+Correlation between the size of wildfires and the total gas emissions.
+By comparing the first and the third graph, we can say that the size of wildfires and the total gas emissions are related. The rise in the number of significant wildfires coincided with a subsequent increase in the total gas emissions.
+
+Correlation between the number of wildfires and the total gas emissions.
+Examining the second and third graphs, they exhibit contrasting characteristics.While the number of wildfires is rapidly increasing from 2019, the total gas emissions has decreased from 2019.
+
+Analyzing the graph above, the correlation between wildfire size and total gas emissions appears to follow a cause-and-effect pattern, whereas the correlation between the number of wildfires and total gas emissions appears to exhibit an opposite trend.
+
+# **Research Question 3: Is there a correlation between GHG emissions and air pollution?**
+
+## 3. Q3 Methods
+
+To answer my question I used *dplyr* functions to merge and reshape my data. I used the **Washington GHG Emissions** data and the **United States Air Pollution** data. An issue that I would like to note is that after I filtered the Air Pollution data to Washington state only, I found that the dataset only considered Seattle air pollution. Because there weren't any better dataset available, I made due by filtering my Washington GHG Data to the *King County* area to highlight the Greater Seattle Area. This will allow me to compare the two data since all the sectors are now around the same area and could possible impact Air pollution in Seattle.
+
+I first selected the logistical data that I need from the GHG data and got the averages for all the variables by year to prepare for merging and reshaping.
+
+```{r}
+ghg_seattle <- ghg %>% 
+  filter(County == "King") %>% 
+  select(-City)
+
+ghg_seattle$Year <- as.character(ghg_seattle$Year)
+
+avg_ghg_seattle <- ghg_seattle %>% 
+  group_by(Year) %>% 
+  summarise_all(mean,na.rm = TRUE) %>% 
+  select(-Sector,-Subsector,-`NAICS Definition`,-`Parent Company`,-County) %>% 
+  mutate(County = "King")
+
+head(avg_ghg_seattle)
+  
+```
+
+I then formatted the Air pollution data to year only so I can merge it by year with the GHG data. I also summarized the averages for all values by the year.
+
+```{r}
+air_pollution$Year <- format(as.Date(air_pollution$Date, format="%d/%m/%Y"),"%Y")
+
+avg_ap_year <- air_pollution %>% 
+  select(-Date,-State,-City,-County) %>% 
+  group_by(Year) %>% 
+  summarise_all(mean)
+
+head(avg_ap_year)
+```
+
+I then joined the two datasets by year to get and idea of what all of their variables and values look like together.
+
+```{r}
+ap_ghg_3 <- inner_join(avg_ghg_seattle,avg_ap_year,
+          by = "Year")
+
+head(ap_ghg_3)
+```
+
+Variables included for final dataset (**ap_ghg_3**):
+
+**Year**
+
+**Total Emissions** - Sum of all GHG emissions (CO, NO, S, etc.), in MTCO2e (metric tons of CO2 equivalent)
+
+**Biogenic Carbon Dioxide (MTCO2e)**
+
+**Carbon Dioxide (MTCO2e)**
+
+**Methane (MTCO2e)**
+
+**Nitrous Oxide (MTCO2e)**
+
+**County** - Only used King County Data
+
+**O3 Mean** - Average Ozone level for a day per year.
+
+**O3 AQI** - Average Air Quality Index for Ozone per year
+
+**CO Mean** - Average Carbon Monoxide level for a day per year.
+
+**CO AQI** - Average Air Quality Index for Carbon Monoxide per year
+
+**SO2 Mean** - Average Sulphur Dioxide level a day per year
+
+**SO2 AQI** - Average Air Quality Index for Sulphur Dioxide per year
+
+**NO2 Mean** - Average Nitrogen Dioxide level a day per year
+
+**NO2 AQI** - Average Air Quality Index for Nitrogen Dioxide per year
+
+Even though some variables are more relevant than others, I chose to incorporate all these variables so I can show the individual trends for each, giving a more accurate depiction when comparing GHG emissions and air pollution/AQI.
+
+To create the graphs, I then pivoted both the Air pollution and GHG datasets to long form, making it easier to sort the points by the variables I want. For the GHG emissions data, I removed all of the non-numeric variables except for county because it isn't needed when comparing general air pollution in Seattle. For the Air Pollution data I also only kept the numeric data that I needed to graph *AQI values* and *Average Gas Levels* (which is the average of the mean gas levels per day).
+
+```{r}
+long_avg_ghg_seattle <- avg_ghg_seattle %>% 
+pivot_longer(!c("Year","County"),
+             names_to = "Emission Types",
+             values_to = "Emission Amount (MTCO2e)")
+
+long_ghg_seattle <- ghg_seattle %>% 
+  select(-Sector,-Subsector,-`NAICS Definition`,-`Parent Company`) %>% 
+  pivot_longer(!c("Year","County"),
+             names_to = "Emission Types",
+             values_to = "Emission Amount (MTCO2e)")
+```
+
+```{r}
+long_avg_aqi <- avg_ap_year %>% 
+  select(Year,'O3 AQI', 'CO AQI', 'SO2 AQI', 'NO2 AQI') %>% 
+  pivot_longer(!c("Year"),
+             names_to = "AQI",
+             values_to = "AQI Value")
+
+long_avg_gas_levels <- avg_ap_year %>% 
+  select(Year,'O3 Mean','CO Mean','SO2 Mean','NO2 Mean') %>% 
+  pivot_longer(!c("Year"),
+             names_to = "Gas Names",
+             values_to = "Average Levels")
+```
+
+To summarize, all this preparation will be used to create various line plots that compares different factors of GHG emissions to air quality and air pollution data. I selected my sample by making sure that data in both datasets are comparable to each other, so it was important for me to narrow down the scope of location and time. I also didn't use any complex statistical methods, just graphed my data using color-cordinated line plots to demonstrate patterns.
+
+## 4. Q3 Results
+
+```{r}
+ap_ghg_3
+```
+
+```{r}
+long_avg_ghg_seattle$Year <- as.numeric(long_avg_ghg_seattle$Year)
+
+long_avg_ghg_seattle %>% 
+  filter(`Emission Types` %in% c("Total Emissions (MTCO2e)", "Carbon Dioxide (MTCO2e)")) %>% 
+  ggplot(aes(Year,`Emission Amount (MTCO2e)`,col = `Emission Types`)) +
+  geom_point() +
+  geom_line() +
+  labs(title = "Emissions by Years (significant)")
+```
+
+```{r}
+long_avg_ghg_seattle %>% 
+  filter(`Emission Types` %in% c("Biogenic Carbon Dioxide (MTCO2e)", "Methane (MTCO2e)", "Nitrous Oxide (MTCO2e)")) %>% 
+  ggplot(aes(Year,`Emission Amount (MTCO2e)`,col = `Emission Types`)) +
+  geom_point() +
+  geom_line() +
+  labs(title = "Emissions by Years (less significant)")
+```
+
+```{r}
+long_avg_aqi$Year <- as.numeric(long_avg_aqi$Year)
+
+long_avg_aqi %>% 
+  filter(Year > 2012) %>% 
+  ggplot(aes(Year,`AQI Value`,col = AQI)) +
+  geom_point() +
+  geom_line() +
+  labs(title = "Average AQI Value per Year")
+```
+
+```{r}
+long_avg_gas_levels$Year <- as.numeric(long_avg_gas_levels$Year)
+
+long_avg_gas_levels %>% 
+  filter(Year > 2012) %>% 
+  ggplot(aes(Year,`Average Levels`,col = `Gas Names`)) +
+  geom_point() +
+  geom_line() +
+  labs(title = "Average Gas levels in a day per Year")
+```
+
+Our results here are only based on King County area data. They tell us that even though there is a clear increasing trend in *Average GHG Emissions per Year*, for significant GHG such as carbon dioxide and biogenic carbon dioxide the trends for AQI and average gas levels in a day per year seems to be stagnate, flat trend. All AQI variables demonstrate a similar trend throughout the recent period of time with some fluctuations in O3 and NO2 AQI but no visible trend. It's the same for average gas levels with fluctuation in NO2 means but no notable trend. Therefore, we can't conclude a correlation between GHG emissions and AQI or air pollution which generally makes sense for now because there isn't a notable difference between the air in the Seattle area throughout the years (only stretches of days of high AQI generally).
+
+
+# 5. Discussion: What do these results mean?
+
+Research Questions: 
+
+We set out and asked these three questions to help Washington State residents gain perspective and learn about the correlation between our greenhouse gas emissions and its impacts on our land and air.
+
+Q1 **What are the total greenhouse gas emissions based on *sector, location, and company?*** 
+
+We started out by asking which *sector, location, and company* are emitting the most greenhouse gases to narrow the scope of our issues. We found that Power Plants, Pulp and Paper, and Petroleum Systems are emitting most in Washington state. Power plants are the primary sector that we need to worry about. Because it these emit the most GHG we understand that the majority of our energy for electricity, heating, cooling, etc. are coming from oil, coal, and other fossil fuel based products. Therefore, the sector data tells us that we need to focus on developing tools for us to use renewable energy. We also see way to develop paper is also releasing lots of GHG and petroleum systems (which extract fuels from fossils or rocks) is also emitting GHG. We found that 2 of the top 3 emitters are fossil fueled based highlighting the importance of developing renewable energy and contributing to that cause. The company data confirms our findings since the top companies for emissions are petroleum and energy based companies.
+
+Our findings for cities with the most GHG emissions also identifies areas of focus for Washington. We found that the highest emitting cities are majorly along the west of Washington with cities such as **Centralia, Longview, Bellevue, and Tacoma**. With this information, people in these cities could support and notify city councils to these specific issues, spreading awareness and concern to the situation.
+
+Our limitations with this data is that we are only looking at company based data so the total emissions aren't regarding the emissions of everyday humans as well. To bring more awareness to the situation we would need to gather information for household GHG emissions as well. This would likely bring the attention of all Washington people and not just companies, giving them more incentive to make changes to their everyday lives to reduce their GHG output.
+
+Q2 **Is there a correlation between greenhouse gas emissions and wildfire *amounts and sizes* in Washington State?**
+
+We then looked for a correlation between GHG emissions and wildfires, since this is a topic of concern for many people along the west coast in recent time, including Washington residents. In our introduction, we analyzed a correlation between GHG emissions and the largest wildfire sizes. This is concerning but we wanted to look into further detail, involving more instances than just the largest wildfire. Looking at the average size of wildfires (in acres) we can see that there is no true pattern. This tells us that wildfire sizes would likely vary by other circumstances and situations and is likely not majorly due to GHG emissions. However, looking at the data for number of wildfires per year, we are seeing an exponential increase in the past few years, somewhat aligning to our GHG emission patterns. This means that there is a possible that GHG emissions are increasing the number of large wildfires in Washington but its more than likely not completely causal. This data should make Washington natives aware of the possible correlation between GHG emissions and wildfire amounts, but isn't something to be overly concerned about.
+
+The limitations of this data and story is that even though people should be made aware of a possible correlation, this isn't an experiment so we can't assume causation. This means that we haven't narrowed down the scope of the causes for these increased wildfire amounts. For our future work, we would need to understand the gases in the air that can cause wildfires to increase in size and amount and analyze the amount of that gas being emitted or is present in the air already.
+
+Q3: **Is there a correlation between GHG emissions and air pollution?**
+
+Finally, our last research question analyzes the correlation between GHG emissions, AQI, and air pollution. For this question, for the sake of accuracy, we only sampled the King County data since the air pollution dataset only contained data from the greater Seattle area. Nonetheless, we could still use this data to discover a correlation (if any) between the 3 variables. The GHG emission data demonstrates clear increase in gases such as CO2 and Methane, contributing to the increasing trend for total emissions, however, our results for AQI and gas levels displayed a stagnate/random trend. This means that there is likely no correlation between GHG and air pollution or AQI with our sample (GHG doesn't impact AQI). This shows Washington residents that although we are increasing in total emissions, it hasn't reached a point yet where our air quality is largely impacted, relieving some concerns. 
+
+A limitation of the data for this research question is that we are looking at data limited to the Seattle area, for the future we should gather more data all around Washington to give more accurate results for our research question. We could also gather data of when the AQI is at its highest in Washington and see if the total emissions during those specific days are increased or not.
+
+# 6. Summary
+
+Informing people of issues like excess GHG emissions is the first step to creating a solution. We are targetting Washington residents, scientists, and policymakers with this project. People generally must first visualize the issue at hand before they have the incentive to work towards the cause. With this project we are looked at GHG emissions throughout recent history (2010-2023) to demonstrate where the issue of increased emissions is taking place and the possible impacts of these emissions on our state. We discovered a general increasing trend when it comes to total emissions and ranked the sectors, companies, and cities based off their emission totals. After we analyzed the locations of the issue we moved to how this issue could lead to issues that impact human and wildlife. We first compared this GHG data to wildfire data in Washington and discovered a possible correlation between an increase in GHG emissions throughout the years and an increase in wildfire sizes. We then looked at AQI and air pollution data to discover that on average, our air is still safe and isn't showing any signs of worsening yet even with an increase in total emissions. Overall, our concerns with an increase in GHG emissions impacting our everyday lives shouldn't be present yet, but we do need to be wary of this increase since it could possible impact our future. We need to work towards different solutions to reduce our GHG emissions for the future at hand.
