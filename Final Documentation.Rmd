@@ -1,0 +1,80 @@
+# Dataset Documentation
+
+## Original Data Sources
+
+### Washington State Green house Gas Reports
+
+##### Source: https://geo.wa.gov/datasets/6f31b076628d4f8ca5a964cbefd2cccc
+
+##### Description: This dataset provides information on CO2 emissions, methane emissions, and many other greenhouse gas emissions reports in the state of Washington.
+
+### Washington State Wild Fire reports
+
+##### Source: https://geo.wa.gov/datasets/6f31b076628d4f8ca5a964cbefd2cccc/explore
+
+##### Description: This dataset consists of records of large Wildfires from 2000 to 2022.
+
+### US Pollution Data (2000 to 2023)
+
+##### Source: https://www.kaggle.com/datasets/guslovesmath/us-pollution-data-200-to-2022
+
+##### Description: This dataset contains information on air pollution in the United States from 2000 to 2023.
+
+## Explanation of Variables
+
+### Washington State Green house Gas Reports
+
+#### Varaibles used:
+
+- Sector - Work Sectors
+- Parent Company - Companies
+- City
+- Total_Emissions - Sum of all GHG emissions (CO, NO, S, etc.), in MTCO2e (metric tons of CO2 equivalent)
+
+### Washington State Wild Fire reports
+
+#### Varaibles used:
+
+- Year
+
+- avg_size - Average wildfire size (in acres) by year
+
+- Wildfires_count - Number of wildfires for that year
+
+### US Pollution Data (2000 to 2023)
+
+#### Varaibles used:
+
+ - Time
+ - Location
+ - AQI - Pollutant
+ - O3 - Pollutant
+ - SO2 - Pollutant
+ - NO2 - Pollutant
+ - CO - Pollutant
+
+## Basic Summary Statistics:
+
+### 1. Washington State Green house Gas Reports
+
+- Number of Rows: 1608
+
+- Number of Columns: 12
+
+- Missing/Invalid Values: 71 missing Parent Company values and 1 missing NAICS value
+
+### 2. Washington State Wild Fire reports
+
+- Number of Rows: 1150
+
+- Number of Columns: 7
+
+- Missing/Invalid Values: 0
+
+### 3. US Pollution Data (2000 to 2023)
+
+- Number of Rows: 3274
+
+- Number of Columns: 13
+
+- Missing/Invalid Values: 0
